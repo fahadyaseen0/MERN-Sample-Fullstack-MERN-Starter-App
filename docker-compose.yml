@@ -1,0 +1,26 @@
+version: '1.0.0'
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.client
+    ports:
+      - "3000:3000"    
+    depends_on:
+      - db
+  server: 
+    build:
+      context: ./server
+      dockerfile: Dockerfile.server
+    ports: 
+      - "5050:5050"    #external:internal 
+    depends_on:
+      - db
+  db:
+    volumes:
+      - db:/data/db
+    image: mongo:6.0.9-rc1
+    ports:
+      - "27017:27017"  
+volumes:
+   db:
